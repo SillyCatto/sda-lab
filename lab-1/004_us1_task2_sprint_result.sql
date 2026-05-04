@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS sprint_result (
 -- before insert trigger to check if race_weekend.has_sprint is TRUE
 DELIMITER //
 
-CREATE TRIGGER trg_before_insert_sprint_result
+CREATE TRIGGER IF NOT EXISTS trg_before_insert_sprint_result
 BEFORE INSERT ON sprint_result
 FOR EACH ROW
 BEGIN
