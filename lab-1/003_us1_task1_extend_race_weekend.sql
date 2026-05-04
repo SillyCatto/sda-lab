@@ -12,6 +12,10 @@ ADD COLUMN sprint_date TIMESTAMP NULL;
 -- verification
 SELECT * FROM race_weekend;
 
+SELECT circuit_id, has_sprint, sprint_date
+FROM race_weekend
+LIMIT 5;
+
 -- Changelog
 
 INSERT INTO change_log (applied_at, created_by, script_name, script_details) 
