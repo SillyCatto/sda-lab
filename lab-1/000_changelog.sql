@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS sda_lab1;
+USE sda_lab1;
+
+CREATE TABLE change_log (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(255) NOT NULL,
+    script_name VARCHAR(255) NOT NULL,
+    script_details TEXT
+);

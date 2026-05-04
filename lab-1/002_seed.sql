@@ -1,6 +1,9 @@
 -- ============================================================
 -- 002_seed.sql
 -- ============================================================
+CREATE DATABASE IF NOT EXISTS sda_lab1;
+USE sda_lab1;
+
 
 -- Constructors
 INSERT INTO constructor (name, nationality, principal) VALUES

@@ -1,6 +1,9 @@
 -- ============================================================
 -- 001_init_schema.sql
 -- ============================================================
+CREATE DATABASE IF NOT EXISTS sda_lab1;
+USE sda_lab1;
+
 
 CREATE TABLE IF NOT EXISTS constructor (
     constructor_id  INT             AUTO_INCREMENT PRIMARY KEY,
