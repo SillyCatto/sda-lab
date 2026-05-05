@@ -13,8 +13,7 @@ DROP COLUMN emergency_contact_migrated;
 
 DELIMITER //
 
--- procedure to retrieve structured contact details
-CREATE PROCEDURE get_driver_emergency_contact(IN p_driver_id INT)
+CREATE PROCEDURE IF NOT EXISTS get_driver_emergency_contact(IN p_driver_id INT)
 BEGIN
     SELECT 
         emergency_contact_name AS name,

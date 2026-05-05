@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS migration_error_log (
 DELIMITER //
 
 -- migration procedure
-CREATE PROCEDURE migrate_emergency_contacts()
+CREATE PROCEDURE IF NOT EXISTS migrate_emergency_contacts()
 BEGIN
     DECLARE done INT DEFAULT FALSE;
     DECLARE v_driver_id INT;
@@ -86,7 +86,7 @@ END //
 
 DELIMITER ;
 
--- 3. Execute the procedure
+-- Execute
 CALL migrate_emergency_contacts();
 
 -- Verification Query
@@ -99,7 +99,7 @@ WHERE emergency_contact_migrated = TRUE;
 SELECT * FROM migration_error_log;
 
 
--- 4. Update change_log
+-- Update change_log
 INSERT INTO change_log (applied_at, created_by, script_name, script_details) 
 VALUES (CURRENT_TIMESTAMP, CURRENT_USER(), '007_us2_phase2_migrate_emergency_contacts.sql', 
     'Created and executed migrate_emergency_contacts procedure. Handled parsing of legacy strings.'
