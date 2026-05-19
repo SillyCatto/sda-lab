@@ -2,7 +2,7 @@ USE pitlane_reporting_db;
 
 DELIMITER //
 
-CREATE PROCEDURE sp_run_etl_pipeline()
+CREATE PROCEDURE IF NOT EXISTS sp_run_etl_pipeline()
 BEGIN
     -- populating dim tables
 
