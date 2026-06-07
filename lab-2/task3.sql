@@ -2,7 +2,9 @@ USE pitlane_reporting_db;
 
 DELIMITER //
 
-CREATE PROCEDURE IF NOT EXISTS sp_run_etl_pipeline()
+DROP PROCEDURE IF EXISTS sp_run_etl_pipeline //
+
+CREATE PROCEDURE sp_run_etl_pipeline()
 BEGIN
     -- populating dim tables
 
@@ -63,7 +65,7 @@ BEGIN
         rr.race_id,
         rr.finish_position,
         rr.points_earned AS grand_prix_points,
-        COALESCE(sr.sprint_points, 0) AS sprint_points,
+        COALESCE(sr.sprint_points_earned, 0) AS sprint_points,
         rr.is_dnf,
         
         -- Aggregated Measures from Subqueries
@@ -88,14 +90,14 @@ BEGIN
         
     -- Aggregate Pit Stops per driver per race
     LEFT JOIN (
-        SELECT race_id, driver_id, COUNT(*) AS total_stops, AVG(duration_seconds) AS avg_duration
+        SELECT race_id, driver_id, COUNT(*) AS total_stops, ROUND(AVG(duration_seconds), 3) AS avg_duration
         FROM sda_lab1.pit_stop
         GROUP BY race_id, driver_id
     ) ps ON rr.race_id = ps.race_id AND rr.driver_id = ps.driver_id
     
     -- Aggregate Tyre Stints per driver per race
     LEFT JOIN (
-        SELECT race_id, driver_id, AVG(end_lap - start_lap) AS avg_stint_laps
+        SELECT race_id, driver_id, ROUND(AVG(end_lap - start_lap), 2) AS avg_stint_laps
         FROM sda_lab1.tyre_stint
         GROUP BY race_id, driver_id
     ) ts ON rr.race_id = ts.race_id AND rr.driver_id = ts.driver_id
